@@ -22,6 +22,7 @@ import { useState } from "react";
 
 function App() {
   // 推荐写法
+  // 注意点：useState不能存在于条件判断语句中
   const [cartNum, setCartNumState] = useState(10);
   const [userName, setUserNameState] = useState('游客');
   // 状态的三部分：初始化，获取和修改

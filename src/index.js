@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import './index.css';
-// import App from './16App-context上下文';
-import App from './App';
+import App from './26App-renderProps';
+// import App from './20App-useState函数组件状态';
+// import App from './App';
 // 提供商 代理商 
 import { Provider } from "react-redux";
 // 导入redux仓库

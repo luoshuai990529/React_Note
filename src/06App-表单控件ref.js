@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 // 1 引入 prop-types
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 class InpCon extends Component {
   constructor(props) {

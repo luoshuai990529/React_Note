@@ -30,8 +30,8 @@ function reducer(state, action) {
 
 function Counter({ initialCount }) {
   // useReducer(reducer) 等价于 createStore(reducer)
-  console.log(initialCount);//{count: 0}
   const [state, dispatch] = useReducer(reducer, initialCount, init);
+  console.log(useReducer(reducer, initialCount));
   return (
     <>
       Count: {state.count}

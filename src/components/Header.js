@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux"
-import { createLoginAction, createLoginOutAction, getUserInfoAction } from '../store/action/actionCreator';
+import { createLoginAction, createLoginOutAction,getSagaUserInfoAction, getUserInfoAction } from '../store/action/actionCreator';
 class Header extends React.Component {
 
     componentWillUnmount() {
@@ -42,7 +42,8 @@ const mapDispatchToProps = (dispatch) => {
         loginHandle: () => {
             // 使用生成器生成的action  createLoginAction
             // dispatch(createLoginAction("王老八"))
-            dispatch(getUserInfoAction())
+            // dispatch(getUserInfoAction())
+            dispatch(getSagaUserInfoAction())
         },
         loginOutHandle:()=>{
             dispatch(createLoginOutAction())

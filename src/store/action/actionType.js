@@ -6,5 +6,5 @@ export const CART_LESS = "CART_LESS"
 
 export const USER_LOGIN = "USER_LOGIN"
 export const USER_OUT = "USER_OUT"
-
+export const CHANGE_INFO = "CHANGE_INFO"
 

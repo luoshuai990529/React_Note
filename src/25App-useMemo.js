@@ -31,16 +31,17 @@ const Btn = ({ num, time }) => {
     console.log("timeChange");
     return time;
   };
+  // 1 只有 num 发生改变了才 更新数据
+  const otherNum = useMemo(numChange, [num]);
+  // 2 只有 time 发生改变了才 更新数据
+  const othertime = useMemo(timeChange, [time]);
 
   // const otherNum = numChange();
   // const othertime = timeChange();
   
   // 使用useMemo进行优化，只有当我们改变了的数据对应的函数，我们才触发
   
-  // 1 只有 num 发生改变了才 更新数据
-  const otherNum = useMemo(numChange, [num]);
-  // 2 只有 time 发生改变了才 更新数据
-  const othertime = useMemo(timeChange, [time]);
+  
 
   return (
     <div>

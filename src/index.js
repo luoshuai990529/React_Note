@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 // import './index.css';
 // import App from './24App-useReducer';
 // import App from './Reducer-redux案例/index'
-import App from './28App-自定义Hook';
+import App from './14.4App-Redux例3抽离模块';
+// import App from './28App-自定义Hook';
 // import App from './25App-useMemo';
 // import App from './27App-useRef';
 // import App from './App';

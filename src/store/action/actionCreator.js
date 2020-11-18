@@ -1,4 +1,4 @@
-const { USER_LOGIN, USER_OUT } = require("./actionType")
+const { USER_LOGIN, USER_OUT, CHANGE_INFO } = require("./actionType")
 // #使用action生成器来创建action
 export const createLoginAction = (username) => {
     return {
@@ -24,3 +24,9 @@ export const getUserInfoAction = () => {
     }
 }
 
+export const getSagaUserInfoAction=()=>{
+    return {type:USER_LOGIN}
+}
+export const changeAction=(data)=>{
+    return {type:CHANGE_INFO,...data}
+}

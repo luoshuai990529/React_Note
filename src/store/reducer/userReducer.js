@@ -1,4 +1,4 @@
-import { USER_LOGIN, USER_OUT } from "../action/actionType";
+import { USER_LOGIN, USER_OUT,CHANGE_INFO } from "../action/actionType";
 
 // 2.创建管理员是一个函数 接收state、action两个参数
 const defaultState = {
@@ -8,6 +8,8 @@ const defaultState = {
 }
 const reducer = (state = defaultState, action) => {
     if (action.type === USER_LOGIN) {
+        return { userInfo: {userName:action.value}}
+    }else if(action.type === CHANGE_INFO){
         return { userInfo: {userName:action.value}}
     } else if (action.type === USER_OUT) {
         return { userInfo: {userName:"游客"} }

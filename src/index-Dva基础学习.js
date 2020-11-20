@@ -2,8 +2,7 @@ import React from "react";
 // 导入dva
 import dva, { connect } from "dva";
 // 导入路由
-import { Router, Route,routerRedux ,Link } from 'dva/router';
-
+import { Router, Route, routerRedux, Link } from "dva/router";
 
 function newSetTiming(time) {
   return new Promise((resolve, reject) => {
@@ -13,12 +12,36 @@ function newSetTiming(time) {
   });
 }
 
-
 //1、创建实例对象
 // 创建实例的时候我们，可以传入我们想指定的路由模式，如果不传就默认是hash模式
 // 导入路由模式：import createHistory from 'history/createBrowserHistory';
 // 例：const app = dva({history: createHistory()});
-let app = dva();
+let app = dva({
+  // 注意点：initialState指定了数据的初始值，那么initialState的优先级也高于Model
+  initialState: {
+    home: {
+      num: 66,
+      info: {
+        name: "",
+        age: "",
+      },
+    },
+  },
+  onError:(error)=>{
+    // 如果在effects中发生了错误，并且在effect中没有补货错误，那么会在onError中捕获
+    // 如果在subscriptions中通过done传递了错误，那么也会在onError中捕获
+    alert(error.message)
+  },
+  // 在dva中dva的onAction就是过去我们使用applyMiddleware(),在 action 被 dispatch 时触发，用于注册 redux 中间件。支持函数或函数数组格式。
+  // 导入中间件 import createLogger from 'redux-logger'
+  // 添加 onAction:createLogger
+  // onStateChange：state 改变时触发，可用于同步 state 到 localStorage，服务器端
+  // onReducer：封装 reducer 执行。比如借助 redux-undo 实现 redo/undo
+  // onEffect：封装 effect 执行。比如 dva-loading 基于此实现了自动处理 loading 状态
+  // onHmr：热替换相关，
+  // extraReducers：指定额外的 reducer，
+  // extraEnhancers：指定额外的 StoreEnhancer
+});
 
 // 定义Model
 /* 
@@ -31,33 +54,33 @@ let HomeModel = {
   namespace: "home",
   state: {
     num: 10,
-    info:{
-      name:"",
-      age:""
-    }
+    info: {
+      name: "",
+      age: "",
+    },
   },
   reducers: {
-    increase: (state,action) => {
-      return {...state, num: state.num + action.num };
+    increase: (state, action) => {
+      return { ...state, num: state.num + action.num };
     },
-    reduce: (state,action) => {
-      return {...state, num: state.num - action.num };
+    reduce: (state, action) => {
+      return { ...state, num: state.num - action.num };
     },
-    changeInfoAction:(state,action)=>{
-      console.log({...state,info:action.info});
-      return {...state,info:action.info}
-    }
+    changeInfoAction: (state, action) => {
+      console.log({ ...state, info: action.info });
+      return { ...state, info: action.info };
+    },
   },
   // 发送异步action
-  effects:{
+  effects: {
     // 这里会拦截effects中的asyncGetInfo类型的action
-    *asyncGetInfo(state,{put}){
+    *asyncGetInfo(state, { put }) {
       console.log("拦截asyncGetInfo");
-       // 进行异步拦截处理
+      // 进行异步拦截处理
       const data = yield newSetTiming(1000);
       // 保存异步数据调用put方法，这里相当于调用dispatch(changeInfoAction(data))
-      yield put({type:"changeInfoAction",info:data});
-    }
+      yield put({ type: "changeInfoAction", info: data });
+    },
   },
   // 每次进入页面 只要调用了app.start 就会执行subscriptions
   subscriptions: {
@@ -65,14 +88,14 @@ let HomeModel = {
       console.log("执行setup");
       // 监听 history 变化，当进入 `/` 时触发 `load` action
       return history.listen(({ pathname }) => {
-        document.title = pathname
+        document.title = pathname;
       });
     },
-    change({ history, dispatch }) {
+    change({ history, dispatch },done) {
       console.log("执行change");
+      // done( new Error("done自定义错误"))
       // 监听 history 变化，当进入 `/` 时触发 `load` action
-      return history.listen(({ pathname }) => {
-      });
+      return history.listen(({ pathname }) => {});
     },
   },
 };
@@ -84,11 +107,11 @@ let AboutModel = {
     count: 10,
   },
   reducers: {
-    increase: (state,action) => {
-      return {...state, count: state.count + action.count };
+    increase: (state, action) => {
+      return { ...state, count: state.count + action.count };
     },
-    reduce: (state,action) => {
-      return {...state, count: state.count - action.count };
+    reduce: (state, action) => {
+      return { ...state, count: state.count - action.count };
     },
   },
 };
@@ -98,24 +121,48 @@ app.model(HomeModel);
 app.model(AboutModel);
 
 function Home(props) {
-  console.log("home",props);
+  console.log("home", props);
   return (
     <div>
       <h2>num:{props.num}</h2>
-      <button onClick={()=>{props.add()}}>增加</button>
-      <button onClick={()=>{props.less()}}>减少</button>
-      <hr/>
+      <button
+        onClick={() => {
+          props.add();
+        }}
+      >
+        增加
+      </button>
+      <button
+        onClick={() => {
+          props.less();
+        }}
+      >
+        减少
+      </button>
+      <hr />
       <h2>name:{props.info.name}</h2>
       <h2>age:{props.info.age}</h2>
-      <button onClick={()=>{props.getUserInfo()}}>发送异步action</button>
+      <button
+        onClick={() => {
+          props.getUserInfo();
+        }}
+      >
+        发送异步action
+      </button>
       {/* 编程试跳转 */}
-      <button onClick={()=>{props.jumpToAbout()}}>跳转到About路由</button>
+      <button
+        onClick={() => {
+          props.jumpToAbout();
+        }}
+      >
+        跳转到About路由
+      </button>
     </div>
   );
 }
 
 const mapStateToProps1 = function (state) {
-  return { num:state.home.num ,info:state.home.info};
+  return { num: state.home.num, info: state.home.info };
 };
 const mapDispatchToProps1 = function (dispatch) {
   return {
@@ -125,33 +172,51 @@ const mapDispatchToProps1 = function (dispatch) {
     less: () => {
       dispatch({ type: "home/reduce", num: 1 });
     },
-    getUserInfo:()=>{
-      dispatch({type:"home/asyncGetInfo"})
+    getUserInfo: () => {
+      dispatch({ type: "home/asyncGetInfo" });
     },
-    jumpToAbout:()=>{
-      dispatch(routerRedux.push('/about'))
-    }
+    jumpToAbout: () => {
+      dispatch(routerRedux.push("/about"));
+    },
   };
 };
 // 调用connect 将mapStateToProps1和mapDispatchToProps1映射到Home组件中
 const DvaHome = connect(mapStateToProps1, mapDispatchToProps1)(Home);
 
-
 function About(props) {
-  console.log("about",props);
+  console.log("about", props);
   return (
     <div>
       <h2>count:{props.count}</h2>
-      <button onClick={()=>{props.add()}}>增加</button>
-      <button onClick={()=>{props.less()}}>减少</button><br/>
-      <button onClick={()=>{props.goBack()}}>返回上一次goBack</button>
-      <hr/>
+      <button
+        onClick={() => {
+          props.add();
+        }}
+      >
+        增加
+      </button>
+      <button
+        onClick={() => {
+          props.less();
+        }}
+      >
+        减少
+      </button>
+      <br />
+      <button
+        onClick={() => {
+          props.goBack();
+        }}
+      >
+        返回上一次goBack
+      </button>
+      <hr />
     </div>
   );
 }
 
 const mapStateToProps2 = function (state) {
-  return { count:state.about.count };
+  return { count: state.about.count };
 };
 const mapDispatchToProps2 = function (dispatch) {
   return {
@@ -161,15 +226,13 @@ const mapDispatchToProps2 = function (dispatch) {
     less: () => {
       dispatch({ type: "about/reduce", count: 2 });
     },
-    goBack:()=>{
-      dispatch(routerRedux.goBack())
-    }
+    goBack: () => {
+      dispatch(routerRedux.goBack());
+    },
   };
 };
 // 调用connect 将mapStateToProps2和mapDispatchToProps2映射到about组件中
 const DvaAbout = connect(mapStateToProps2, mapDispatchToProps2)(About);
-
-
 
 // 2.定义组件
 function App(props) {
@@ -179,14 +242,14 @@ function App(props) {
       {/* <DvaHome />
       <hr/>
       <DvaAbout/> */}
-      
+
       <Router history={props.history}>
         <>
-        <p>通过link路由跳转</p>
-        <Link to={'/about'}>About</Link>
-        <Link to={'/home'}>Home</Link>
-        <Route path="/home" component={DvaHome} />
-        <Route path="/about" component={DvaAbout} />
+          <p>通过link路由跳转</p>
+          <Link to={"/about"}>About</Link>
+          <Link to={"/home"}>Home</Link>
+          <Route path="/home" component={DvaHome} />
+          <Route path="/about" component={DvaAbout} />
         </>
       </Router>
     </div>
@@ -197,6 +260,6 @@ function App(props) {
 // dva的router方法值执行回调函数的时候回传递一个对象给我们，我们可以从中解构出当前的路由模式
 // 如果在创建dva实例的时候没有指定模式，那么得到的就是hash模式
 // 如果在创建dva实例的时候制定了模式，那么就是我们指定的模式
-app.router(({history}) => <App history={history}/>);
+app.router(({ history }) => <App history={history} />);
 // 4.启动dva
 app.start("#root");

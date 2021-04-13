@@ -27,7 +27,7 @@ const AddAuthorMsg = (SonCom) => {
       console.log('高阶组件的生命周期');
     }
     render() {
-      return <SonCom {...this.props} author="作者信息：杰"></SonCom>;
+      return <SonCom {...this.props} author="作者信息：杰">---插槽内容---</SonCom>;
     }
   };
 };
@@ -38,9 +38,13 @@ class HOC extends React.Component {
   render() {
     console.log(this.props);
     return (
-      <div>
-        {this.props.author}
-      </div>
+     <React.Fragment>
+        <h4>高阶组件是参数为组件，返回值为新组件的函数:</h4>
+        <div style={{background:'#87a8c7',padding:'10px'}}>
+          {this.props.author}
+          <p>{this.props.children}</p>
+        </div>
+     </React.Fragment>
     );
   }
 }

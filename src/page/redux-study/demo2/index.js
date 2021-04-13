@@ -73,7 +73,8 @@ class App extends React.Component {
 
     render() {
         return (
-            <div id="app">
+            <div>
+                <h2>redux-案例2 ：</h2>
                 <Header></Header>
                 <Detail></Detail>
             </div>

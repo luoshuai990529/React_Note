@@ -39,12 +39,13 @@ useEffect 就是一个 Effect Hook，给函数组件增加了操作副作用的�
   2、大多数情况下，effect 不需要同步地执行。
   在个别情况下（例如测量布局），有单独的 useLayoutEffect
 */
+
 const Son = (aa) => {
   const [count, setCount] = useState(0);
-
+  
   useEffect(() => {
     // 这里相当于执行了componentDidMount componentDidUpdate
-    console.log("执行useEffect,count的值："+count);
+    console.log("执行useEffect");
 
     // 卸载时写这里
     return () => {
@@ -66,6 +67,7 @@ const Son = (aa) => {
       <h1>函数组件</h1>
       <h1>count的值：{count}</h1>
       <button onClick={() => setCount(count+1)}>count增加</button>
+      
     </>
   );
 };

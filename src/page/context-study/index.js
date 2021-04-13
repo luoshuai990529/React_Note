@@ -37,7 +37,7 @@ class Son2 extends React.Component {
       <div>
         <h2>--Son2子组件--</h2>
         <h3>
-          上下文的数据：{this.context.cartNum}，{this.context.name}
+          上下文的数据：{this.context.cartNum}
         </h3>
       </div>
     );
@@ -46,7 +46,7 @@ class Son2 extends React.Component {
 // 给子组件添加 Context 关联
 // Son.contextType = AppContext;
 
-class App extends React.Component {
+class Context extends React.Component {
   state = {
     cartNum: 11
   };
@@ -85,4 +85,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default Context;

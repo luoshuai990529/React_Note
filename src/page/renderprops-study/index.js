@@ -17,6 +17,8 @@ class Mouse extends React.Component {
   };
 
   render() {
+    // this.state {x:0,y:0}
+    // this.props.render = mouse =>{ <Cat mouse={mouse} /> }
     return (
       <>
         <div
@@ -41,8 +43,8 @@ class Cat extends React.Component {
         <div
           style={{
             background: "hotpink",
-            width: "10px",
-            height: "10px",
+            width: "20px",
+            height: "20px",
             position: "absolute",
             left: this.props.mouse.x,
             top: this.props.mouse.y,
@@ -56,6 +58,8 @@ class Cat extends React.Component {
 function NewMouse() {
   return (
     <>
+      <h2>具有 render prop 的组件接受一个返回 React 元素的函数，并在组件内部通过调用此函数来实现自己的渲染逻辑。使用 Render Props 来解决横切关注点</h2>
+      <p>更具体地说，render prop 是一个用于告知组件需要渲染什么内容的函数 prop。</p>
       <Mouse render={(mouse) => <Cat mouse={mouse} />} />
     </>
   );

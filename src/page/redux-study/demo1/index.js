@@ -77,7 +77,7 @@ class Demoa extends Component {
     }
     render() {
         return <div>
-            111
+            Demoa
         </div>
     }
 }
@@ -86,7 +86,8 @@ class App extends React.Component {
 
     render() {
         return (
-            <div id="app">
+            <div >
+                <h2>redux-案例1 入门：</h2>
                 <Demoa></Demoa>
             </div>
         )

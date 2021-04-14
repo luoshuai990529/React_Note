@@ -56,6 +56,12 @@ class Cat extends React.Component {
 }
 
 function NewMouse() {
+
+  /* 
+  将 Render Props 与 React.PureComponent 一起使用时要小心
+  如果你在 render 方法里创建函数，那么使用 render prop 会抵消使用 React.PureComponent 带来的优势。
+  因为浅比较 props 的时候总会得到 false，并且在这种情况下每一个 render 对于 render prop 将会生成一个新的值。
+  */
   return (
     <>
       <h2>具有 render prop 的组件接受一个返回 React 元素的函数，并在组件内部通过调用此函数来实现自己的渲染逻辑。使用 Render Props 来解决横切关注点</h2>

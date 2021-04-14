@@ -1,4 +1,5 @@
 #app {
+    position: relative;
     min-height: 100vh;
     // background: skyblue;
     display: flex;
@@ -21,5 +22,9 @@
         flex: 10;
         padding: 20px;
         border: 1px solid black;
+        .desc{
+            font-size: 16px;
+            background: rgb(207, 207, 207);
+        }
     }
 }

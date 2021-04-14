@@ -1,0 +1,28 @@
+.tips{
+    position: relative;
+    z-index: 10;
+    width: 150px;
+    height: 150px;
+    background: yellow;
+    color: rgb(0, 0, 0);
+    overflow: hidden;
+}
+.modal{
+    position: absolute;
+    z-index: 20;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    color: black;
+    background: rgb(0, 0, 0);
+    opacity: .7;
+    text-align: center;
+    span{
+        h2{
+            margin-top: 150px;
+            color: #fff;
+        }
+        margin-top: 100px;
+    }
+}

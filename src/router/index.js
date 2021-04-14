@@ -4,6 +4,7 @@ import ReduxDemo1 from '../page/redux-study/demo1'
 import ReduxDemo2 from '../page/redux-study/demo2'
 import ReduxDemo3 from '../page/redux-study/demo3'
 import useState from '../page/hooks-study/useState'
+import useStateOrigin from '../page/hooks-study/useStateOrigin'
 import useEffect from '../page/hooks-study/useEffect'
 import useEffectDemo from '../page/hooks-study/useEffectDemo'
 import useContext from '../page/hooks-study/useContext'
@@ -12,6 +13,7 @@ import useReducer from '../page/hooks-study/useReducer'
 import useRef from '../page/hooks-study/useRef'
 import renderProps from '../page/renderprops-study'
 import customHook from '../page/hooks-study/customHooks'
+import Portal from '../page/portal-study'
 const routes = [
     {
       path:'/',
@@ -54,6 +56,12 @@ const routes = [
                 name:'useState',
                 path:'/use-state',
                 component:useState
+            }
+            ,
+            {
+                name:'useState源码中的链表',
+                path:'/use-state-origin',
+                component:useStateOrigin
             },
             {
                 name:'useEffect',
@@ -96,6 +104,11 @@ const routes = [
         name:'renderProps',
         path: '/render-props',
         component: renderProps,
+    },
+    {   
+        name:'ReactDOM.createPortal',
+        path: '/Portal',
+        component: Portal,
     },
 ]
 

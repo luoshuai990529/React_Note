@@ -41,46 +41,50 @@ useEffect 就是一个 Effect Hook，给函数组件增加了操作副作用的�
 */
 
 const Son = (aa) => {
-  const [count, setCount] = useState(0);
-  
-  useEffect(() => {
-    // 这里相当于执行了componentDidMount componentDidUpdate
-    console.log("执行useEffect");
-
-    // 卸载时写这里
-    return () => {
-      console.log("组件被卸载了！！❌");
-    };
-    // 当我们effect第二个参数这个数组中，不填入count这个参数，
-    // 那么我们改变count参数就不会执行到卸载方法中了，以提升组件效率
-    
+    const [count, setCount] = useState(0);
     /* 
-        注意：只有 当函数（以及它所调用的函数）不引用 props、state 以及由它们衍生而来的值时，
-        你才能放心地把它们从依赖列表中省略。
+    useEffect 接收一个函数，该函数会在组件渲染到屏幕之后才执行，
+    该函数有要求：要么返回一个能清除副作用的函数，要么就不返回任何内容
     */
-   
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+    useEffect(() => {
+        // 这里相当于执行了componentDidMount componentDidUpdate
+        console.log("执行useEffect");
 
-  return (
-    <>
-      <h1>函数组件</h1>
-      <h1>count的值：{count}</h1>
-      <button onClick={() => setCount(count+1)}>count增加</button>
-      
-    </>
-  );
+        // 卸载时写这里
+        return () => {
+            console.log("组件被卸载了！！❌");
+        };
+        // 当我们effect第二个参数这个数组中，不填入count这个参数，
+        // 那么我们改变count参数就不会执行到卸载方法中了，以提升组件效率
+
+        /* 
+            注意：只有 当函数（以及它所调用的函数）不引用 props、state 以及由它们衍生而来的值时，
+            你才能放心地把它们从依赖列表中省略。
+        */
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return (
+        <>
+            <h1 className='desc'>如果想执行只运行一次的 effect（仅在组件挂载和卸载时执行），可以传递一个空数组（[]）作为第二个参数。这就告诉 React 你的 effect 不依赖于 props 或 state 中的任何值，所以它永远都不需要重复执行</h1>
+            <h1>函数组件</h1>
+            <h1>count的值：{count}</h1>
+            <button onClick={() => setCount(count + 1)}>count增加</button>
+
+        </>
+    );
 };
 
 function App() {
-  const [bl, setBlState] = useState(true);
+    const [bl, setBlState] = useState(true);
 
-  return (
-    <>
-      <button onClick={() => setBlState(!bl)}>开关 - 条件渲染组件</button>
-      {bl && <Son></Son>}
-    </>
-  );
+    return (
+        <>
+            <button onClick={() => setBlState(!bl)}>开关 - 条件渲染组件</button>
+            {bl && <Son></Son>}
+        </>
+    );
 }
 
 export default App;

@@ -6,11 +6,13 @@ import ReduxDemo3 from '../page/redux-study/demo3'
 import useState from '../page/hooks-study/useState'
 import useStateOrigin from '../page/hooks-study/useStateOrigin'
 import useEffect from '../page/hooks-study/useEffect'
+import useLayoutEffect from '../page/hooks-study/useLayoutEffect'
 import useEffectDemo from '../page/hooks-study/useEffectDemo'
 import useContext from '../page/hooks-study/useContext'
 import useMemo from '../page/hooks-study/useMemo'
 import useReducer from '../page/hooks-study/useReducer'
 import useRef from '../page/hooks-study/useRef'
+import forwardRef from '../page/hooks-study/forwardRef'
 import renderProps from '../page/renderprops-study'
 import customHook from '../page/hooks-study/customHooks'
 import Portal from '../page/portal-study'
@@ -69,6 +71,11 @@ const routes = [
                 component:useEffect
             },
             {
+                name:'useLayoutEffect',
+                path:'/use-layout-effect',
+                component:useLayoutEffect
+            },
+            {
                 name:'useEffect-demo',
                 path:'/use-effect-demo',
                 component:useEffectDemo
@@ -87,6 +94,10 @@ const routes = [
                 name:'useRef',
                 path:'/use-ref',
                 component:useRef
+            },{
+                name:'forwardRef',
+                path:'/forward-ref',
+                component:forwardRef
             },
             {
                 name:'useContext',

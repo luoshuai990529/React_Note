@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './mainApp';
-import 'antd/dist/antd.css';
-import 'normalize.css';
 // 提供商 代理商 
 import { Provider } from "react-redux";
 // 导入redux仓库

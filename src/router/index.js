@@ -15,7 +15,9 @@ import useRef from '../page/hooks-study/useRef'
 import forwardRef from '../page/hooks-study/forwardRef'
 import renderProps from '../page/renderprops-study'
 import customHook from '../page/hooks-study/customHooks'
+import aHooks from '../page/hooks-study/aHooks'
 import Portal from '../page/portal-study'
+import reactVirtualized from '../page/react-virtualized'
 const routes = [
     {
       path:'/',
@@ -108,6 +110,11 @@ const routes = [
                 name:'自定义hook',
                 path:'/custom-hook',
                 component:customHook
+            },
+            {
+                name:'aHooks使用',
+                path:'/ahooks',
+                component:aHooks
             }
         ]
     },
@@ -120,6 +127,11 @@ const routes = [
         name:'ReactDOM.createPortal',
         path: '/Portal',
         component: Portal,
+    },
+    {   
+        name:'虚拟化列表',
+        path: '/reactVirtualized',
+        component: reactVirtualized,
     },
 ]
 

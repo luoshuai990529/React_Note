@@ -63,7 +63,7 @@ function App(props, context) {
 	const elementIsVisibleInViewport = (el, parent) => {
 		const { top, left, bottom, right } = el.getBoundingClientRect();
 		const { top: parentTop, bottom: parentBottom } = parent.getBoundingClientRect();
-		const isVisible = bottom > 0 && bottom > parentTop && bottom < parentBottom;
+		const isVisible = bottom > 0 && bottom > (parentTop+5) && bottom < parentBottom;
 		return isVisible;
 		// return partiallyVisible
 		// 	? ((top > 0 && top < innerHeight) || (bottom > 0 && bottom < innerHeight)) && ((left > 0 && left < innerWidth) || (right > 0 && right < innerWidth))

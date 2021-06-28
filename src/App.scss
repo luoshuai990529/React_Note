@@ -1,12 +1,19 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 #app {
     position: relative;
-    min-height: 100vh;
+    overflow: auto;
     // background: skyblue;
     display: flex;
     .sider-bar{
         flex: 2;
-        max-width: 220px;
-        min-width: 160px;
+        min-width: 220px;
+        height: 100vh;
+        padding: 20px 0px;
+        overflow: auto;
         background: black;
         // border: 1px solid hotpink;
         .router-item{

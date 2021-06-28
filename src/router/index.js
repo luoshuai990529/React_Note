@@ -18,6 +18,8 @@ import customHook from '../page/hooks-study/customHooks'
 import aHooks from '../page/hooks-study/aHooks'
 import Portal from '../page/portal-study'
 import reactVirtualized from '../page/react-virtualized'
+import immutability from '../page/immutability不可变性/immutability'
+import lifecycle from '../09App-生命周期'
 const routes = [
     {
       path:'/',
@@ -133,6 +135,16 @@ const routes = [
         path: '/reactVirtualized',
         component: reactVirtualized,
     },
+    {   
+        name:'immutability不可变性',
+        path: '/immutability',
+        component: immutability,
+    },
+    {
+        name:"生命周期顺序",
+        path:'/lifecycle',
+        component:lifecycle
+    }
 ]
 
 export default routes

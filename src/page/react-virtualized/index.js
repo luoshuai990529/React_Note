@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
-import 'react-virtualized/styles.css';
+// import 'react-virtualized/styles.css';
 // You can import any component you want as a named export from 'react-virtualized', eg
 import { List, AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized';
 const cache = new CellMeasurerCache({ defaultHeight: 205, fixedWidth: true });
@@ -33,8 +33,8 @@ function App(props, context) {
 		isVisible, // This row is visible within the List (eg it is not an overscanned row)
 		style, // Style object to be applied to row (to position it)
 	}) {
-        console.log(index,'isScrolling---',isScrolling);
-        console.log(index,'isVisible---',isVisible);
+        // console.log(index,'isScrolling---',isScrolling);
+        // console.log(index,'isVisible---',isVisible);
 		// CellMeasurer 适配动态高度
 		return (
 			<CellMeasurer cache={cache} columnIndex={0} key={key} parent={parent} rowIndex={index}>

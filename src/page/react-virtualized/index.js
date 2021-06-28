@@ -4,7 +4,7 @@ import './index.scss';
 import 'react-virtualized/styles.css';
 // You can import any component you want as a named export from 'react-virtualized', eg
 import { List, AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized';
-const cache = new CellMeasurerCache({ defaultHeight: 30, fixedWidth: true });
+const cache = new CellMeasurerCache({ defaultHeight: 205, fixedWidth: true });
 function App(props, context) {
 	const listHeight = 300;
 	const ListRef = useRef(null);
@@ -14,7 +14,7 @@ function App(props, context) {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	useEffect(() => {
 		let arr = [];
-		for (let i = 0; i < 100; i++) {
+		for (let i = 0; i < 1000; i++) {
 			arr.push(i);
 		}
 		setList(arr);
@@ -33,15 +33,13 @@ function App(props, context) {
 		isVisible, // This row is visible within the List (eg it is not an overscanned row)
 		style, // Style object to be applied to row (to position it)
 	}) {
-		// let height = 200;
-		if (index % 2 === 0) {
-			// height = 250;
-		}
+        console.log(index,'isScrolling---',isScrolling);
+        console.log(index,'isVisible---',isVisible);
+		// CellMeasurer 适配动态高度
 		return (
 			<CellMeasurer cache={cache} columnIndex={0} key={key} parent={parent} rowIndex={index}>
-				{/* <div key={key} style={{ ...style, height: `${height}px`, border: '1px solid black' }}> */}
-				<div style={{ ...style }}>
-					第{list[index]}行
+				<div style={{ ...style }} data-index={index}>
+					<span>第{list[index]}行</span>
 					{index % 2 === 0 ? (
 						<div>
 							<p>换行====={list[index]}</p>
@@ -60,18 +58,20 @@ function App(props, context) {
 			</CellMeasurer>
 		);
 	}
+
+	// 判断元素是否在可见范围内
+	// return partiallyVisible
+	// 	? ((top > 0 && top < innerHeight) || (bottom > 0 && bottom < innerHeight)) && ((left > 0 && left < innerWidth) || (right > 0 && right < innerWidth))
+	// 	: top >= 0 && left >= 0 && bottom <=
+	//     innerHeight && right <= innerWidth;
 	const elementIsVisibleInViewport = (el, parent) => {
-		const { top, left, bottom, right } = el.getBoundingClientRect();
+		const { bottom } = el.getBoundingClientRect();
 		const { top: parentTop, bottom: parentBottom } = parent.getBoundingClientRect();
-		const isVisible = bottom > 0 && bottom > (parentTop+5) && bottom < parentBottom;
+		const isVisible = bottom > 0 && bottom > parentTop + 5 && bottom < parentBottom;
 		return isVisible;
-		// return partiallyVisible
-		// 	? ((top > 0 && top < innerHeight) || (bottom > 0 && bottom < innerHeight)) && ((left > 0 && left < innerWidth) || (right > 0 && right < innerWidth))
-		// 	: top >= 0 && left >= 0 && bottom <=
-		//     innerHeight && right <= innerWidth;
 	};
 	const onScroll = ({ clientHeight, scrollHeight, scrollTop }) => {
-		VirRef.current&&VirRef.current.timeId && clearTimeout(VirRef.current.timeId);
+		VirRef.current && VirRef.current.timeId && clearTimeout(VirRef.current.timeId);
 		if (VirRef.current) {
 			VirRef.current.timeId = setTimeout(() => {
 				const dateList = document.querySelectorAll('.ReactVirtualized__Grid__innerScrollContainer>div');
@@ -79,35 +79,33 @@ function App(props, context) {
 					const bol = elementIsVisibleInViewport(item, VirRef.current);
 					return bol;
 				});
-				console.log('当前展示的item:', visibleList[0]);
-				console.log('当兵前高度---', scrollTop);
-			}, 20);
-		}
-
-		// console.log('当前可见的Item:',visibleList);
-		if (ListRef.current) {
-			// const obj = ListRef.current.getOffsetForRow({ alignment: 'start' ,index:currentIndex});
-			// console.log('getOffsetForRow', obj);
+				const index = parseInt(visibleList[0].getAttribute('data-index'));
+				// console.log('当前展示的item:',visibleList[0] );
+				setCurrentIndex(index);
+			}, 30);
 		}
 	};
 	const backTop = () => {
-		console.log('回到顶部“', ListRef.current);
-		ListRef.current.scrollToRow(0);
 		setCurrentIndex(0);
-		// setScrollToIndex(0);
+		setScrollToIndex(0);
 	};
 	const lastPage = () => {
-		// setScrollToIndex(currentIndex-1);
+		if (currentIndex === 0) {
+			return;
+		}
+		const count = currentIndex - 1;
+		setCurrentIndex(count);
+		setScrollToIndex(count);
 	};
 	const nextPage = () => {
 		const count = currentIndex + 1;
-		console.log('currentIndex---', currentIndex);
+		console.log('count---', count);
 		setCurrentIndex(count);
 		setScrollToIndex(count);
 	};
 	return (
 		<React.Fragment>
-			<h1>当前行数</h1>
+			<h1>当前行数{currentIndex}</h1>
 			<div ref={VirRef} className='virtualized' style={{ wordBreak: 'normal', border: '1px solid black', width: '240px', height: '300px' }}>
 				<AutoSizer disableHeight>
 					{({ width }) => (
